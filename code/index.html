@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>WeatherMap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="page-title">WeatherMap <small lang="ar">خريطة الطقس</small></h1>
+    </header>
+
+    <form class="search-form" id="search-form" novalidate>
+      <label for="location-input" class="visually-hidden">Location</label>
+      <input type="text" id="location-input" class="text-input" placeholder="City or town, e.g. Port Sudan" autocomplete="off">
+      <button type="submit" id="search-btn" class="btn btn-primary">Get Weather</button>
+    </form>
+
+    <div class="fav-list" id="fav-list">
+      <button type="button" id="save-fav-btn" class="btn btn-outline btn-small" disabled>+ Save current</button>
+    </div>
+
+    <div id="alerts"></div>
+
+    <div class="map-wrap">
+      <div id="map"></div>
+      <div class="loading-box" id="loading-box" role="status" hidden>
+        <div class="spinner"></div>
+        <span id="loading-text">Loading…</span>
+      </div>
+    </div>
+
+    <section class="forecast-section" id="forecast-section" hidden>
+      <h2 class="section-title" id="forecast-title">5-day forecast</h2>
+      <div class="forecast" id="forecast"></div>
+    </section>
+
+    <footer class="footer">
+      <p>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · Weather data from <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeather</a></p>
+      <p>Omer Khalid · Advanced Web Technologies</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <template id="popup-template">
+    <div class="popup-content">
+      <div class="popup-city"><span class="city-name"></span> <span class="city-country"></span></div>
+      <div class="popup-now">
+        <img class="popup-icon" src="" alt="" width="56" height="56">
+        <div>
+          <div class="popup-temp"><span class="temp-value"></span><sup>°C</sup></div>
+          <div class="popup-desc"></div>
+        </div>
+      </div>
+      <dl class="popup-stats">
+        <div><dt>Clouds</dt><dd class="stat-clouds"></dd></div>
+        <div><dt>Humidity</dt><dd class="stat-humidity"></dd></div>
+        <div><dt>Wind</dt><dd class="stat-wind"></dd></div>
+      </dl>
+      <div class="popup-footer">
+        <span class="popup-time"></span>
+        <button type="button" class="btn btn-share">Share</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="day-template">
+    <div class="day-card">
+      <div class="day-name"></div>
+      <div class="day-date"></div>
+      <img class="day-icon" src="" alt="" width="40" height="40">
+      <div class="day-temps"><b class="day-max"></b> <span class="day-min"></span></div>
+      <svg class="temp-bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true">
+        <rect class="temp-bar-bg" x="0" y="0" width="100" height="4" rx="2"></rect>
+        <rect class="temp-bar-fill" x="0" y="0" width="100" height="4" rx="2"></rect>
+      </svg>
+    </div>
+  </template>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
